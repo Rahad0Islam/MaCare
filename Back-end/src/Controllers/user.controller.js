@@ -14,7 +14,7 @@ const Option={
 const Register=AsynHandler(async(req,res)=>{
   console.log("Register proccsing started ");
 
-    const {FullName="",UserName="",Email="",Gender="",Password="",PhoneNumber="",Role="",DateOfBirth}=req.body;
+    const {FullName="",UserName="",Email="",Gender="",Password="",PhoneNumber="",Role="",DateOfBirth,address}=req.body;
     console.log(UserName,"   dff");
     if(FullName==="" || UserName==="" || Role==""||
         Email==="" || Password==="" || DateOfBirth===""){
@@ -50,7 +50,15 @@ const Register=AsynHandler(async(req,res)=>{
 
     if(!ProfileImage)throw new ApiError(501,"Cloudinary problem")
     
-    
+    let parsedAddress = null;
+    if (address) { 
+        try { 
+            parsedAddress = typeof address === "string" ? JSON.parse(address) : address; 
+        } catch (err) { 
+            throw new ApiError(400, "Invalid address format, must be JSON"); 
+        }
+     }
+    console.log(address);
    const user=await User.create({
       FullName,
       UserName,
@@ -60,6 +68,7 @@ const Register=AsynHandler(async(req,res)=>{
       PhoneNumber,
       Role,
       DateOfBirth,
+      address:parsedAddress,
       ProfileImage:ProfileImage?.url,
       ProfilePublicId:ProfileImage?.public_id,
    })

@@ -77,6 +77,12 @@
        
        DeliveryTime:{
         type:Date
+       },
+
+       address:{
+         village:String,
+         upazila:String,
+         zila:String
        }
 
 
