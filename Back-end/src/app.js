@@ -27,8 +27,10 @@ app.use(cookieParser())
 
 //importing Routers
 import UserRoutes from './Routes/User.Route.js'
-
+import MotherRoutes from './Routes/mother.Route.js'
 app.use("/api/v1/users",UserRoutes)
+app.use("/api/v1/mother",MotherRoutes)
+
 
 
 
